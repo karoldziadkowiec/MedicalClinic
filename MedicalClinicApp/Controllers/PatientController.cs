@@ -17,6 +17,7 @@ namespace MedicalClinicApp.Controllers
             _patientRepository = patientRepository;
         }
 
+        // GET: /api/patients
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()
         {
@@ -31,6 +32,22 @@ namespace MedicalClinicApp.Controllers
             }
         }
 
+        // GET: /api/patients/pagination
+        [HttpGet("/pagination")]
+        public async Task<ActionResult<List<Patient>>> GetPatients(int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                var patients = await _patientRepository.GetPatientsByPagination(page, pageSize);
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving patients: {ex.Message}");
+            }
+        }
+
+        // GET: /api/patients/:id
         [HttpGet("{patientId}")]
         public async Task<IActionResult> GetPatientById(int patientId)
         {
@@ -50,6 +67,7 @@ namespace MedicalClinicApp.Controllers
             }
         }
 
+        // POST: /api/patients
         [HttpPost]
         public async Task<IActionResult> AddPatient(Patient patient)
         {
@@ -64,6 +82,7 @@ namespace MedicalClinicApp.Controllers
             }
         }
 
+        // PUT: /api/patients/:id
         [HttpPut("{patientId}")]
         public async Task<IActionResult> UpdatePatient(int patientId, Patient patient)
         {
@@ -89,6 +108,7 @@ namespace MedicalClinicApp.Controllers
             }
         }
 
+        // DELETE: /api/patients/:id
         [HttpDelete("{patientId}")]
         public async Task<IActionResult> DeletePatient(int patientId)
         {
@@ -106,20 +126,6 @@ namespace MedicalClinicApp.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error removing patient: {ex.Message}");
-            }
-        }
-
-        [HttpGet("csv")]
-        public async Task<IActionResult> GetPatientsCsvFile()
-        {
-            try
-            {
-                var csvBytes = await _patientRepository.GetPatientsCsvBytes();
-                return File(csvBytes, "application/octet-stream", "patients.csv");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }
