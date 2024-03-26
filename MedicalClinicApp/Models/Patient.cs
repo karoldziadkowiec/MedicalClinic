@@ -15,6 +15,7 @@ namespace MedicalClinicApp.Models
         public string Pesel { get; set; }
         [ForeignKey("Address")]
         public int AddressId { get; set; }
+        public Address Address { get; set; }
 
         public Patient(int id, string firstName, string lastName, string pesel, int addressId)
         {

@@ -77,7 +77,20 @@ namespace MedicalClinicApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("MedicalClinicApp.Models.Patient", b =>
+                {
+                    b.HasOne("MedicalClinicApp.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 #pragma warning restore 612, 618
         }

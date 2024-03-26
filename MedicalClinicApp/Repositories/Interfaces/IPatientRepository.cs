@@ -7,5 +7,9 @@ namespace MedicalClinicApp.Repositories.Interfaces
     {
         Task<IQueryable<Patient>> GetAllPatients();
         Task<Patient> GetPatientById(int patientId);
+        Task AddPatient(Patient patient);
+        Task UpdatePatient(Patient patient);
+        Task DeletePatient(int patientId);
+        Task<byte[]> GetPatientsCsvBytes();
     }
 }
