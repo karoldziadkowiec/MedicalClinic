@@ -1,3 +1,36 @@
 .Home {
     text-align: center;
+    padding-top: 50px;
+}
+
+.medicalClinic {
+    color: rgb(67, 64, 53);
+    font-family: Garamond, serif;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 150px;
+}
+
+.Home h2 {
+    font-family: Garamond, serif;
+    font-weight: bold;
+    padding-top: 30px;
+}
+
+.Home h4 {
+    font-family: 'Times New Roman', serif;
+}
+
+.Home h5 {
+    font-family: 'Times New Roman', serif;
+    padding-bottom: 10px;
+}
+
+.sign {
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
 }
