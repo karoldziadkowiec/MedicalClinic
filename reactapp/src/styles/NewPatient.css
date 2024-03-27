@@ -1,4 +1,13 @@
 .NewPatient {
     text-align: center;
     padding-top: 30px;
+    padding-bottom: 100px;
+}
+
+.forms-container {
+    background-color: rgb(128, 225, 255);
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 40px;
+    border-radius: 20px;
 }

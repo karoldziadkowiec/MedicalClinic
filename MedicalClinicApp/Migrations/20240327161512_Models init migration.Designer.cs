@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalClinicApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240326092308_Models init migration")]
+    [Migration("20240327161512_Models init migration")]
     partial class Modelsinitmigration
     {
         /// <inheritdoc />

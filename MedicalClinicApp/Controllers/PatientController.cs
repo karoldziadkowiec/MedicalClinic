@@ -69,13 +69,18 @@ namespace MedicalClinicApp.Controllers
 
         // POST: /api/patients
         [HttpPost]
-        public async Task<IActionResult> AddPatient(Patient patient)
+        public async Task<IActionResult> AddPatient([FromBody] Patient patient)
         {
-            try
-            {
-                await _patientRepository.AddPatient(patient);
-                return CreatedAtAction(nameof(GetPatientById), new { id = patient.Id }, patient);
-            }
+        if (patient == null)
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            await _patientRepository.AddPatient(patient);
+            return Ok(patient);
+        }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error adding patient: {ex.Message}");

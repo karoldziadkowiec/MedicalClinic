@@ -13,17 +13,6 @@ namespace MedicalClinicApp.Models
         public string LastName { get; set; }
         [MaxLength(11)]
         public string Pesel { get; set; }
-        [ForeignKey("Address")]
-        public int AddressId { get; set; }
         public Address Address { get; set; }
-
-        public Patient(int id, string firstName, string lastName, string pesel, int addressId)
-        {
-            this.Id = id;
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Pesel = pesel;
-            this.AddressId = addressId;
-        }
     }
 }

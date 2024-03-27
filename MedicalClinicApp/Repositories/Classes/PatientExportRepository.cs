@@ -17,7 +17,7 @@ namespace MedicalClinicApp.Repositories.Classes
 
         public async Task<byte[]> GetPatientsCsvBytes()
         {
-            var patients = await _context.Patients.ToListAsync();
+            var patients = await _context.Patients.Include(p => p.Address).ToListAsync();
 
             using (var workbook = new XLWorkbook())
             {
@@ -39,8 +39,7 @@ namespace MedicalClinicApp.Repositories.Classes
                     worksheet.Cell(row, 3).Value = patient.LastName;
                     worksheet.Cell(row, 4).Value = patient.Pesel;
 
-                    var existingAddress = await _context.Addresses.FindAsync(patient.AddressId);
-                    if (existingAddress != null)
+                    if (patient.Address != null)
                     {
                         worksheet.Cell(row, 5).Value = patient.Address.City;
                         worksheet.Cell(row, 6).Value = patient.Address.Street;

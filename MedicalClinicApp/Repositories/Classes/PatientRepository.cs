@@ -44,23 +44,22 @@ namespace MedicalClinicApp.Repositories.Classes
                 existingPatient.FirstName = patient.FirstName;
                 existingPatient.LastName = patient.LastName;
                 existingPatient.Pesel = patient.Pesel;
-                existingPatient.AddressId = patient.AddressId;
-            }
 
-            var existingAddress = await _context.Addresses.FindAsync(patient.AddressId);
-            if (existingAddress != null)
-            {
-                existingAddress.City = patient.Address.City;
-                existingAddress.Street = patient.Address.Street;
-                existingAddress.ZipCode = patient.Address.ZipCode;
-            }
-            else
-            {
-                throw new ArgumentException("Address not found");
+                if (existingPatient.Address != null)
+                {
+                    existingPatient.Address.City = patient.Address.City;
+                    existingPatient.Address.Street = patient.Address.Street;
+                    existingPatient.Address.ZipCode = patient.Address.ZipCode;
+                }
+                else
+                {
+                    throw new ArgumentException("Address not found");
+                }
             }
 
             await _context.SaveChangesAsync();
         }
+
 
         public async Task DeletePatient(int patientId)
         {
