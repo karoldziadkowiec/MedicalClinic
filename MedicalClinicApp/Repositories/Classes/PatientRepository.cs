@@ -15,11 +15,16 @@ namespace MedicalClinicApp.Repositories.Classes
         }
 
         public async Task<IQueryable<Patient>> GetAllPatients()
-            => await Task.FromResult(_context.Patients.OrderBy(p => p.Pesel));
+        {
+            return await Task.FromResult(_context.Patients
+                .Include(p => p.Address)
+                .OrderBy(p => p.Pesel));
+        }
 
         public async Task<List<Patient>> GetPatientsByPagination(int page, int pageSize)
         {
             return await _context.Patients
+                .Include(p => p.Address)
                 .OrderBy(p => p.Pesel)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -27,7 +32,11 @@ namespace MedicalClinicApp.Repositories.Classes
         }
 
         public async Task<Patient> GetPatientById(int patientId)
-            => await _context.Patients.FindAsync(patientId);
+        {
+            return await _context.Patients
+                .Include(p => p.Address)
+                .FirstOrDefaultAsync(p => p.Id == patientId);
+        }
 
         public async Task AddPatient(Patient patient)
         {
@@ -37,29 +46,20 @@ namespace MedicalClinicApp.Repositories.Classes
 
         public async Task UpdatePatient(Patient patient)
         {
-            var existingPatient = await _context.Patients.FindAsync(patient.Id);
+            var existingPatient = await _context.Patients.Include(p => p.Address).FirstOrDefaultAsync(p => p.Id == patient.Id);
 
             if (existingPatient != null)
             {
                 existingPatient.FirstName = patient.FirstName;
                 existingPatient.LastName = patient.LastName;
                 existingPatient.Pesel = patient.Pesel;
-
-                if (existingPatient.Address != null)
-                {
-                    existingPatient.Address.City = patient.Address.City;
-                    existingPatient.Address.Street = patient.Address.Street;
-                    existingPatient.Address.ZipCode = patient.Address.ZipCode;
-                }
-                else
-                {
-                    throw new ArgumentException("Address not found");
-                }
+                existingPatient.Address.City = patient.Address.City;
+                existingPatient.Address.Street = patient.Address.Street;
+                existingPatient.Address.ZipCode = patient.Address.ZipCode;
             }
 
             await _context.SaveChangesAsync();
         }
-
 
         public async Task DeletePatient(int patientId)
         {

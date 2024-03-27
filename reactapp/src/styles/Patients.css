@@ -1,4 +1,10 @@
 .Patients {
     text-align: center;
     padding-top: 30px;
+    padding-bottom: 100px;
+}
+
+.list-container {
+    margin-left: 15%;
+    margin-right: 15%;
 }

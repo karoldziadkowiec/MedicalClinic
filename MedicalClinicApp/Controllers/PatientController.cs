@@ -32,9 +32,9 @@ namespace MedicalClinicApp.Controllers
             }
         }
 
-        // GET: /api/patients/pagination
-        [HttpGet("/pagination")]
-        public async Task<ActionResult<List<Patient>>> GetPatients(int page = 1, int pageSize = 10)
+        // GET: /api/patients/pagination?page=1&pageSize=7
+        [HttpGet("pagination")]
+        public async Task<ActionResult<List<Patient>>> GetPatients(int page = 1, int pageSize = 7)
         {
             try
             {
@@ -93,11 +93,6 @@ namespace MedicalClinicApp.Controllers
         {
             try
             {
-                if (patientId != patient.Id)
-                {
-                    return BadRequest("Patient id mismatch");
-                }
-
                 var existingPatient = await _patientRepository.GetPatientById(patientId);
                 if (existingPatient == null)
                 {

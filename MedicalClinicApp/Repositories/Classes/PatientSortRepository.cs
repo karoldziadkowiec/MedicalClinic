@@ -15,15 +15,15 @@ namespace MedicalClinicApp.Repositories.Classes
         }
 
         public async Task<IEnumerable<Patient>> SortByLastName()
-            => await _context.Patients.OrderBy(p => p.LastName).ToListAsync();
+            => await _context.Patients.Include(p => p.Address).OrderBy(p => p.LastName).ToListAsync();
 
         public async Task<IEnumerable<Patient>> SortByPesel()
-            => await _context.Patients.OrderBy(p => p.Pesel).ToListAsync();
+            => await _context.Patients.Include(p => p.Address).OrderBy(p => p.Pesel).ToListAsync();
 
         public async Task<IEnumerable<Patient>> SortByCity()
-            => await _context.Patients.OrderBy(p => p.Address.City).ToListAsync();
+            => await _context.Patients.Include(p => p.Address).OrderBy(p => p.Address.City).ToListAsync();
 
         public async Task<IEnumerable<Patient>> SortByZipCode()
-            => await _context.Patients.OrderBy(p => p.Address.ZipCode).ToListAsync();
+            => await _context.Patients.Include(p => p.Address).OrderBy(p => p.Address.ZipCode).ToListAsync();
     }
 }

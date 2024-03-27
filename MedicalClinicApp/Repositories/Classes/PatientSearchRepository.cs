@@ -15,11 +15,16 @@ namespace MedicalClinicApp.Repositories.Classes
         }
 
         public async Task<IEnumerable<Patient>> SearchPatients(string searchTerm)
-            => await Task.FromResult(_context.Patients.Where(p => p.FirstName == searchTerm || p.LastName == searchTerm));
+        {
+            return await Task.FromResult(_context.Patients
+                .Where(p => p.FirstName == searchTerm || p.LastName == searchTerm)
+                .Include(p => p.Address));
+        }
 
         public async Task<IEnumerable<Patient>> SearchPatientsPartial(string searchTerm)
         {
             return await _context.Patients
+                .Include(p => p.Address)
                 .Where(p => p.FirstName.Contains(searchTerm) || p.LastName.Contains(searchTerm))
                 .ToListAsync();
         }
