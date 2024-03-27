@@ -45,7 +45,6 @@ namespace MedicalClinicApp.Repositories.Classes
                         worksheet.Cell(row, 6).Value = patient.Address.Street;
                         worksheet.Cell(row, 7).Value = patient.Address.ZipCode;
                     }
-
                     row++;
                 }
 
