@@ -70,6 +70,7 @@ Unit testing repository methods via xUnit:
 ![12](github-images/12.png)
 
 Mobile version of web app:
+
 ![13](github-images/13.png)
 
 ![14](github-images/14.png)
