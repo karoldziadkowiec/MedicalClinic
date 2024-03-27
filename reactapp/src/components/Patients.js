@@ -177,7 +177,7 @@ const Patients = () => {
                 <Dropdown.Toggle variant="dark" id="dropdown-basic">
                   Sort By
                 </Dropdown.Toggle>
-  
+
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleSort('last-name')}>Last Name</Dropdown.Item>
                   <Dropdown.Item onClick={() => handleSort('pesel')}>PESEL</Dropdown.Item>
