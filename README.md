@@ -10,9 +10,9 @@ The project is a web application presenting a platform for managing patients in 
   - **C#**
     - Asynchronous programming (async/await)
     - LINQ Queries
-    - Repository and Pagination patterns
-    - Configuration management with appsettings.json
     - ClosedXML
+    - Dependency Injection, Repository and Pagination patterns
+    - Configuration management with appsettings.json
   - ORM: **Entity Framework Core**
     - Migrations
   - Database: **Microsoft SQL Server**
