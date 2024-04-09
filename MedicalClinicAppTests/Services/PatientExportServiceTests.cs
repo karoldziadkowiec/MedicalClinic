@@ -36,6 +36,7 @@ namespace MedicalClinicAppTests.Services
                 };
                 context.Patients.Add(new Patient { Id = 1, FirstName = "Leo", LastName = "Messi", Pesel = "12345678901", Address = address });
                 context.Patients.Add(new Patient { Id = 2, FirstName = "Cristiano", LastName = "Ronaldo", Pesel = "98765432109", Address = address });
+                
                 await context.SaveChangesAsync();
             }
 
