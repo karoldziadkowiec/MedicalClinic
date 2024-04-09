@@ -1,16 +1,16 @@
 ﻿using ClosedXML.Excel;
 using MedicalClinicApp.DatabaseHandler;
 using MedicalClinicApp.Models;
-using MedicalClinicApp.Repositories.Interfaces;
+using MedicalClinicApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace MedicalClinicApp.Repositories.Classes
+namespace MedicalClinicApp.Services.Classes
 {
-    public class PatientExportRepository : IPatientExportRepository
+    public class PatientExportService : IPatientExportService
     {
         private readonly AppDbContext _context;
 
-        public PatientExportRepository(AppDbContext context)
+        public PatientExportService(AppDbContext context)
         {
             _context = context;
         }

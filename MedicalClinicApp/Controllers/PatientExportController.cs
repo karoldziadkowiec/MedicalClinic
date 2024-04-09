@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using MedicalClinicApp.Models;
 using MedicalClinicApp.Repositories.Classes;
-using MedicalClinicApp.Repositories.Interfaces;
+using MedicalClinicApp.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +11,11 @@ namespace MedicalClinicApp.Controllers
     [ApiController]
     public class PatientExportController : ControllerBase
     {
-        private readonly IPatientExportRepository _patientExportRepository;
+        private readonly IPatientExportService _patientExportService;
 
-        public PatientExportController(IPatientExportRepository patientExportRepository)
+        public PatientExportController(IPatientExportService patientExportService)
         {
-            _patientExportRepository = patientExportRepository;
+            _patientExportService = patientExportService;
         }
 
         // GET: /api/patients/csv
@@ -24,7 +24,7 @@ namespace MedicalClinicApp.Controllers
         {
             try
             {
-                var csvBytes = await _patientExportRepository.GetPatientsCsvBytes();
+                var csvBytes = await _patientExportService.GetPatientsCsvBytes();
                 return File(csvBytes, "application/octet-stream", "patients.csv");
             }
             catch (Exception ex)

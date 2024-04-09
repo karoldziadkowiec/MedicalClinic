@@ -1,6 +1,7 @@
 ﻿using MedicalClinicApp.DatabaseHandler;
 using MedicalClinicApp.Models;
 using MedicalClinicApp.Repositories.Classes;
+using MedicalClinicApp.Services.Classes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
@@ -9,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedicalClinicAppTests.Repositories
+namespace MedicalClinicAppTests.Services
 {
-    public class PatientExportRepositoryTests
+    public class PatientExportServiceTests
     {
         private DbContextOptions<AppDbContext> GetDbContextOptions(string dbName)
         {
@@ -40,7 +41,7 @@ namespace MedicalClinicAppTests.Repositories
 
             using (var context = new AppDbContext(options))
             {
-                var repository = new PatientExportRepository(context);
+                var repository = new PatientExportService(context);
 
                 // Act
                 var result = await repository.GetPatientsCsvBytes();
