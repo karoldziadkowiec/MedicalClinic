@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ListGroup, Button, Modal, Form, Dropdown, Row, Col } from 'react-bootstrap';
+import PatientApi from '../services/api/PatientApi';
 import '../App.css';
 import '../styles/Patients.css';
 
@@ -17,17 +18,7 @@ const Patients = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        let url = `https://localhost:7241/api/patients/pagination?page=${currentPage}&pageSize=7`;
-        if (searchTerm) {
-          url = `https://localhost:7241/api/patients/search/partial/${searchTerm}`;
-        } else if (sortType) {
-          url = `https://localhost:7241/api/patients/sort/${sortType}`;
-        }
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error('Failed to fetch patients');
-        }
-        const data = await response.json();
+        const data = await PatientApi.getPatients({ currentPage, searchTerm, sortType });
         setPatients(data);
         setLoading(false);
       } catch (error) {
@@ -55,19 +46,13 @@ const Patients = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7241/api/patients/${id}`, {
-        method: 'DELETE'
-      });
-      if (!response.ok) {
-        throw new Error('Failed to delete patient');
-      }
+      await PatientApi.deletePatient(id);
       setPatients(prevPatients => prevPatients.filter(patient => patient.id !== id));
     } catch (error) {
       console.error(error);
     }
   };
-
-  const handleDetails = (patient) => {
+ const handleDetails = (patient) => {
     setSelectedPatient(patient);
     setShowDetailsModal(true);
   };
@@ -89,28 +74,13 @@ const Patients = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`https://localhost:7241/api/patients/${editedPatient.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedPatient),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update patient');
-      }
-      if (response.status === 204) {
-        setShowEditModal(false);
-        return;
-      }
-      const updatedPatient = await response.json();
+      await PatientApi.updatePatient(editedPatient);
       setPatients(prevPatients =>
-        prevPatients.map(patient =>
-          patient.id === updatedPatient.id ? updatedPatient : patient
+        prevPatients.map(p =>
+          p.id === editedPatient.id ? editedPatient : p
         )
       );
       setShowEditModal(false);
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -139,17 +109,7 @@ const Patients = () => {
 
   const handleExportPatients = async () => {
     try {
-      const response = await fetch('https://localhost:7241/api/patients/csv');
-      if (!response.ok) {
-        throw new Error('Failed to export patients');
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'patients.csv');
-      document.body.appendChild(link);
-      link.click();
+      await PatientApi.exportPatients();
     } catch (error) {
       console.error(error);
     }

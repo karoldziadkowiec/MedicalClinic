@@ -1,21 +1,15 @@
 import React from 'react';
 import './App.css';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import Home from './components/Home';
-import Patients from './components/Patients';
-import NewPatient from './components/NewPatient';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routing from './routes/Routing';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/patients" element={<Patients />} />
-        <Route path="/new-patient" element={<NewPatient />} />
-      </Routes>
+      <Routing />
       <Footer /> 
     </Router>
   );
